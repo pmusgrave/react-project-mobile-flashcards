@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
 
 export default class DeckInfo extends Component {
-	render() {
+  render() {
 		const { deck } = this.props;
 
 		return (
@@ -12,7 +12,7 @@ export default class DeckInfo extends Component {
 				</Text>
 				<Text style={styles.cards}>
 					{deck.cards.length} cards
-				</Text>			
+				</Text>
 			</View>
 		);
 	}

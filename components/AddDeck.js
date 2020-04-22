@@ -12,8 +12,12 @@ export default class AddDeck extends Component {
 		this.setState({ value: text });
 	}
 
-	submit = (value) => {
-		addDeck(value);
+	submit = (name) => {
+		let deck = {
+			name,
+			cards: [],
+		}
+		addDeck(deck);
 	}
 
 	render() {

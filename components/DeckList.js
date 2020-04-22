@@ -1,32 +1,39 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { getAllDecks, addDeck } from '../utils/api'
+import { getDeck, getAllDecks, addDeck } from '../utils/api'
+import DeckPage from './DeckPage'
 import DeckInfo from './DeckInfo'
 import AddDeck from './AddDeck'
 
 export default class DeckList extends Component {
   state = {
-    
+  	decks: [],
+    selected: null,
   };
 
-  async componentDidMount() {
+  refresh_decks = async () => {
   	let data = await getAllDecks();
   	data = JSON.parse(data);
-  	let decks = data.decks;
-  	decks = Object.values(decks);
-  	this.setState({ decks, })
-  }
-  
-  add_deck = (deck) => {
-  	addDeck(deck);
-  }
-
-  remove_deck = () => {
-
+  	if (data === null) {
+  		return;
+  	}
+  	else {
+  		let decks = data.decks;
+	  	decks = Object.values(decks);
+  		this.setState({ decks, })	
+  	}
   }
 
-  onPress = (deck) => {
-  	console.log(deck);
+  componentDidMount() {
+  	this.refresh_decks();
+  }
+
+  onPress = async (deck) => {
+  	this.setState({ selected: deck })
+  }
+
+  resetView = () => {
+  	this.setState({ selected: null });
   }
 
 	renderItem = ({ item }) => {
@@ -34,7 +41,7 @@ export default class DeckList extends Component {
 			<View style={styles.deck}>
 				<TouchableOpacity
 	        style={styles.button}
-	        onPress={() => { this.onPress(item.name) }}>
+	        onPress={() => { this.onPress(item) }}>
 		      <DeckInfo deck={item}/>
 	      </TouchableOpacity>
 			</View>
@@ -42,16 +49,26 @@ export default class DeckList extends Component {
 	}
 
 	render() {
-		const { decks } = this.state;
+		const { decks, selected } = this.state;
 
-		return (
-			<View>
-				<FlatList 
-					data={decks}
-					renderItem={this.renderItem}
-				/>
-			</View>
-		);
+		if (selected === null) {
+			return (
+				<View>
+					<FlatList 
+						data={decks}
+						renderItem={this.renderItem}
+					/>
+				</View>
+			);
+		}
+		else {
+			return (
+				<DeckPage
+					deck={selected}
+					resetView={this.resetView.bind(this)}
+					refresh_decks={this.refresh_decks.bind(this)}/>
+			);
+		}
 	}
 }
 

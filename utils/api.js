@@ -11,28 +11,27 @@ export function getAllDecks() {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY);
 }
 
-export function getDeck(deck) {
-	let data = AsyncStorage.getItem(DECK_STORAGE_KEY);
-	return data[deck];
-}
+
 
 export function addDeck(deck) {
 	let id = generateUID();
 	return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
 		decks: {
-			[id]: deck,
+			[id]: { ...deck, id }
 		}
 	}))
 }
 
 export async function removeDeck(deck) {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY)
-		.then((decks) => {
-			let updated_decks = JSON.parse(decks);
-			updated_decks[deck] = undefined;
-			delete updated_decks[deck];
-			AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(updated_decks));
-		});
+	.then((data) => {
+		let updated_decks = JSON.parse(data).decks;
+		updated_decks[deck.id] = undefined;
+		delete updated_decks[deck.id];
+		AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify({
+			decks: updated_decks,
+		}));
+	});
 }
 
 export function addCard(card, deck) {
