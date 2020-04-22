@@ -11,8 +11,6 @@ export function getAllDecks() {
 	return AsyncStorage.getItem(DECK_STORAGE_KEY);
 }
 
-
-
 export function addDeck(deck) {
 	let id = generateUID();
 	return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({

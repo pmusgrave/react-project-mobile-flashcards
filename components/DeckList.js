@@ -1,47 +1,21 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
-import { getDeck, getAllDecks, addDeck } from '../utils/api'
+import { getAllDecks, addDeck } from '../utils/api'
 import DeckPage from './DeckPage'
 import DeckInfo from './DeckInfo'
 import AddDeck from './AddDeck'
 
 export default class DeckList extends Component {
-  state = {
-  	decks: [],
-    selected: null,
-  };
-
-  refresh_decks = async () => {
-  	let data = await getAllDecks();
-  	data = JSON.parse(data);
-  	if (data === null) {
-  		return;
-  	}
-  	else {
-  		let decks = data.decks;
-	  	decks = Object.values(decks);
-  		this.setState({ decks, })	
-  	}
-  }
-
   componentDidMount() {
-  	this.refresh_decks();
+  	this.props.refresh_decks();
   }
 
-  onPress = async (deck) => {
-  	this.setState({ selected: deck })
-  }
-
-  resetView = () => {
-  	this.setState({ selected: null });
-  }
-
-	renderItem = ({ item }) => {
+  renderItem = ({ item }) => {
 		return (
 			<View style={styles.deck}>
 				<TouchableOpacity
 	        style={styles.button}
-	        onPress={() => { this.onPress(item) }}>
+	        onPress={() => { this.props.select(item) }}>
 		      <DeckInfo deck={item}/>
 	      </TouchableOpacity>
 			</View>
@@ -49,8 +23,8 @@ export default class DeckList extends Component {
 	}
 
 	render() {
-		const { decks, selected } = this.state;
-
+		const { decks, selected } = this.props;
+		
 		if (selected === null) {
 			return (
 				<View>
@@ -65,8 +39,8 @@ export default class DeckList extends Component {
 			return (
 				<DeckPage
 					deck={selected}
-					resetView={this.resetView.bind(this)}
-					refresh_decks={this.refresh_decks.bind(this)}/>
+					resetView={this.props.resetView}
+					refresh_decks={this.props.refresh_decks}/>
 			);
 		}
 	}

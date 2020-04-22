@@ -18,6 +18,7 @@ export default class AddDeck extends Component {
 			cards: [],
 		}
 		addDeck(deck);
+		this.props.showDeckList();
 	}
 
 	render() {
@@ -26,7 +27,7 @@ export default class AddDeck extends Component {
 			<View style={styles.header}>
 				<Text style={styles.headerText}>What is the title of your new deck?</Text>
 				<TextInput
-		      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+		      style={styles.input}
 		      onChangeText={text => this.onChangeText(text)}
 		      value={value}
 		    />
@@ -50,7 +51,8 @@ const styles = {
 	headerText: {
 		fontSize: 22
 	},
-	button: {
-
+	input: {
+		borderColor: 'gray',
+		borderWidth: 1,
 	},
 }
