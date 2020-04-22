@@ -1,10 +1,26 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { StyleSheet, View, Text, FlatList } from 'react-native'
 
 export default class DeckList extends Component {
+  state = {
+    decks: [{
+    	name: "Deck 1",
+    },{
+    	name: "Deck 2",
+    }],
+  };
+  
+  add_deck = () => {
+
+  }
+
+  remove_deck = () => {
+
+  }
+
 	renderItem = ({ item }) => {
 		return (
-			<View>
+			<View style={styles.deck}>
 				<Text>
 					{item.name === undefined ? null : item.name}
 				</Text>
@@ -13,7 +29,7 @@ export default class DeckList extends Component {
 	}
 
 	render() {
-		const { decks } = this.props;
+		const { decks } = this.state;
 		return (
 			<View>
 				<FlatList 
@@ -24,3 +40,13 @@ export default class DeckList extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+  deck: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+

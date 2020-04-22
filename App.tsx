@@ -8,43 +8,28 @@ import {
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 
-export default class App extends Component {
-  state = {
-    decks: [],
-  };
-
-  
-  add_deck = () => {
-
-  }
-
-  remove_deck = () => {
-
-  }
-  
-  render(){
-    const Tabs = createBottomTabNavigator({
-      Decks: {
-        screen: DeckList,
-        navigationOptions: {
-          //tabBarIcon: () => < />,
-          tabBarLabel: "Decks",
-        }
-      },
-      Add: {
-        screen: AddDeck,
-        navigationOptions: {
-          //tabBarIcon: () => < />,
-          tabBarLabel: "Add Deck",
-        },
+export default function App() {
+  const Tabs = createBottomTabNavigator({
+    Decks: {
+      screen: DeckList,
+      navigationOptions: {
+        //tabBarIcon: () => < />,
+        tabBarLabel: "Decks",
       }
-    })
-    const App = createAppContainer(Tabs);
+    },
+    Add: {
+      screen: AddDeck,
+      navigationOptions: {
+        //tabBarIcon: () => < />,
+        tabBarLabel: "Add Deck",
+      },
+    }
+  })
+  const App = createAppContainer(Tabs);
 
-    return (
-      <App/>
-    );
-  }
+  return(
+    <App/>
+  )
 }
 
 const styles = StyleSheet.create({
