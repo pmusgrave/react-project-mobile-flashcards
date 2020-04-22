@@ -1,35 +1,49 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { getAllDecks, addDeck } from '../utils/api'
+import DeckInfo from './DeckInfo'
+import AddDeck from './AddDeck'
 
 export default class DeckList extends Component {
   state = {
-    decks: [{
-    	name: "Deck 1",
-    },{
-    	name: "Deck 2",
-    }],
+    
   };
-  
-  add_deck = () => {
 
+  async componentDidMount() {
+  	let data = await getAllDecks();
+  	data = JSON.parse(data);
+  	let decks = data.decks;
+  	decks = Object.values(decks);
+  	this.setState({ decks, })
+  }
+  
+  add_deck = (deck) => {
+  	addDeck(deck);
   }
 
   remove_deck = () => {
 
   }
 
+  onPress = (deck) => {
+  	console.log(deck);
+  }
+
 	renderItem = ({ item }) => {
 		return (
 			<View style={styles.deck}>
-				<Text>
-					{item.name === undefined ? null : item.name}
-				</Text>
+				<TouchableOpacity
+	        style={styles.button}
+	        onPress={() => { this.onPress(item.name) }}>
+		      <DeckInfo deck={item}/>
+	      </TouchableOpacity>
 			</View>
 		);
 	}
 
 	render() {
 		const { decks } = this.state;
+
 		return (
 			<View>
 				<FlatList 
@@ -47,6 +61,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 5
+  },
+  button: {
+
   },
 });
-

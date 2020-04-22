@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import {
-    createStackNavigator,
-    createAppContainer
-  } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 
