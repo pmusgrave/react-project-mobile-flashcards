@@ -1,12 +1,50 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import {
+    createStackNavigator,
+    createAppContainer
+  } from 'react-navigation';
+import DeckList from './components/DeckList'
+import AddDeck from './components/AddDeck'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+export default class App extends Component {
+  state = {
+    decks: [],
+  };
+
+  
+  add_deck = () => {
+
+  }
+
+  remove_deck = () => {
+
+  }
+  
+  render(){
+    const Tabs = createBottomTabNavigator({
+      Decks: {
+        screen: DeckList,
+        navigationOptions: {
+          //tabBarIcon: () => < />,
+          tabBarLabel: "Decks",
+        }
+      },
+      Add: {
+        screen: AddDeck,
+        navigationOptions: {
+          //tabBarIcon: () => < />,
+          tabBarLabel: "Add Deck",
+        },
+      }
+    })
+    const App = createAppContainer(Tabs);
+
+    return (
+      <App/>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
