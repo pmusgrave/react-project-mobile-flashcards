@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import { getAllDecks, addDeck } from './utils/api'
 import DeckList from './components/DeckList'
+import DeckPage from './components/DeckPage'
 import DeckInfo from './components/DeckInfo'
 import AddDeck from './components/AddDeck'
 
@@ -13,6 +15,10 @@ export default class App extends Component {
     decks: [],
     selected: null,
   };
+
+  componentDidMount() {
+    this.refresh_decks();
+  }
 
   refresh_decks = async () => {
     let data = await getAllDecks();
@@ -54,47 +60,60 @@ export default class App extends Component {
   }
 
   render(){
+    const Tabs = createBottomTabNavigator({
+      DeckList: {
+        screen: (props) => 
+          <DeckList {...props} 
+            decks={this.state.decks}
+            selected={this.state.selected}
+            select={this.select.bind(this)}
+            resetView={this.resetView.bind(this)}
+            refresh_decks={this.refresh_decks.bind(this)}
+          />,
+        navigationOptions: {
+          tabBarLabel: 'Decks',
+        },
+      },
+      AddEntry: {
+        screen: AddDeck,
+        navigationOptions: {
+          tabBarLabel: 'Add Deck',
+        },
+      },
+    })
+
+    const MainNavigator = createStackNavigator({
+      Home: {
+        screen: Tabs,
+      },
+      DeckPage: {
+        screen: DeckPage,
+      },
+    })
+
+    const AppContainer = createAppContainer(MainNavigator);
+
     return(
-      <View>
-        {this.state.showDeckList && <DeckList
-              decks={this.state.decks}
-              selected={this.state.selected}
-              select={this.select.bind(this)}
-              resetView={this.resetView.bind(this)}
-              refresh_decks={this.refresh_decks.bind(this)}/>}
-
-        {this.state.showAddDeck && <AddDeck showDeckList={this.showDeckList.bind(this)}/>}
-
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({
-              showDeckList: true,
-              showAddDeck: false,
-            });
-            this.resetView();
-          }}>
-          <Text>Decks</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => { 
-            this.setState({
-              showAddDeck: true,
-              showDeckList: false,
-            });
-            this.resetView();
-          }}>
-          <Text>Add Deck</Text>
-        </TouchableOpacity>
-      </View>
+      <AppContainer />
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
+  },
+  navButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    alignItems: 'bottom',
+    justifyContent: 'stretch',
+  },
+  navButtons: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });

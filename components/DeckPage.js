@@ -4,17 +4,35 @@ import { removeDeck } from '../utils/api'
 import DeckInfo from './DeckInfo'
 
 export default class DeckPage extends Component {
+	addCard = () => {
+
+	}
+
+	startQuiz = () => {
+
+	}
+
 	delete = async (deck) => {
 		await removeDeck(deck);
-		this.props.refresh_decks();
-		this.props.resetView();
+		this.props.navigation.state.params.refresh_decks();
+		this.props.navigation.navigate('DeckList');
 	}
 	render() {
-		const { deck } = this.props;
+		const { deck } = this.props.navigation.state.params;
 
 		return (
 			<View>
 				<DeckInfo deck={deck}/>
+				<TouchableOpacity
+	        style={styles.button}
+	        onPress={ () => this.addCard(deck) }>
+	        <Text>ADD CARD</Text>
+	      </TouchableOpacity>
+	      <TouchableOpacity
+	        style={styles.button}
+	        onPress={ () => this.startQuiz(deck) }>
+	        <Text>START QUIZ</Text>
+	      </TouchableOpacity>
 				<TouchableOpacity
 	        style={styles.button}
 	        onPress={ () => this.delete(deck) }>

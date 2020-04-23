@@ -6,16 +6,16 @@ import DeckInfo from './DeckInfo'
 import AddDeck from './AddDeck'
 
 export default class DeckList extends Component {
-  componentDidMount() {
-  	this.props.refresh_decks();
-  }
-
-  renderItem = ({ item }) => {
+  renderItem = (navigation, item, refresh_decks) => {
 		return (
-			<View style={styles.deck}>
+			<View style={styles.deck}
+				key={item.id}>
 				<TouchableOpacity
 	        style={styles.button}
-	        onPress={() => { this.props.select(item) }}>
+	        onPress={() => { navigation.navigate('DeckPage', {
+	        	deck: item,
+	        	refresh_decks,
+	        }) }}>
 		      <DeckInfo deck={item}/>
 	      </TouchableOpacity>
 			</View>
@@ -23,26 +23,27 @@ export default class DeckList extends Component {
 	}
 
 	render() {
-		const { decks, selected } = this.props;
-		
+		const { decks, selected, navigation, refresh_decks } = this.props;
+
 		if (selected === null) {
 			return (
 				<View>
 					<FlatList 
 						data={decks}
-						renderItem={this.renderItem}
+						renderItem={(e) => this.renderItem(navigation, e.item, refresh_decks)}
+						keyExtractor={(item, index) => index.toString()}
 					/>
 				</View>
 			);
 		}
-		else {
-			return (
-				<DeckPage
-					deck={selected}
-					resetView={this.props.resetView}
-					refresh_decks={this.props.refresh_decks}/>
-			);
-		}
+		// else {
+		// 	return (
+		// 		<DeckPage
+		// 			deck={selected}
+		// 			resetView={this.props.resetView}
+		// 			refresh_decks={this.props.refresh_decks}/>
+		// 	);
+		// }
 	}
 }
 
