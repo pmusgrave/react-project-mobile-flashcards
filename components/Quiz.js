@@ -105,11 +105,11 @@ export default class Quiz extends Component {
 					</Text>
 					<TouchableOpacity
 	      		onPress={ this.reset_quiz }>
-	      		<Text>Start the quiz again</Text>
+	      		<Text>Restart Quiz</Text>
 	    		</TouchableOpacity>
 	    		<TouchableOpacity
-	      		onPress={ () => this.props.navigation.navigate('DeckList') }>
-	      		<Text>Home</Text>
+	      		onPress={ () => this.props.navigation.navigate('DeckPage', { deck: this.state.deck }) }>
+	      		<Text>Back to Deck</Text>
 	    		</TouchableOpacity>
 				</View>
 			)
