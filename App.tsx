@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
+import { createAppContainer, } from 'react-navigation';
 import { getAllDecks, addDeck } from './utils/api'
 import DeckList from './components/DeckList'
 import DeckPage from './components/DeckPage'
@@ -22,6 +22,7 @@ export default class App extends Component {
   }
 
   refresh_decks = async () => {
+    console.log('refreshing...')
     let data = await getAllDecks();
     data = JSON.parse(data);
     if (data === null) {
@@ -30,11 +31,14 @@ export default class App extends Component {
     else {
       let decks = data.decks;
       decks = Object.values(decks);
-      this.setState({ decks, }) 
+      this.setState({ decks, refresh:false}) 
     }
   }
 
   render(){
+    if (this.state.refresh) {
+      this.state.refresh_decks();
+    }
     const Tabs = createBottomTabNavigator({
       DeckList: {
         screen: (props) => 
@@ -47,7 +51,7 @@ export default class App extends Component {
         },
       },
       AddDeck: {
-        screen: AddDeck,
+        screen: (props) => (<AddDeck refresh_decks={this.refresh_decks.bind(this)} {...props}/>),
         navigationOptions: {
           tabBarLabel: 'Add Deck',
         },
@@ -63,9 +67,10 @@ export default class App extends Component {
       },
       DeckPage: {
         screen: DeckPage,
-        navigationOptions: {
-          title: "Deck"
-        }
+        navigationOptions: ({navigation}) => ({
+          title: 'Deck',
+          headerLeft: <HeaderBackButton onPress={() => this.refresh_decks()} />
+        })
       },
       AddCard: {
         screen: AddCard,
@@ -73,12 +78,7 @@ export default class App extends Component {
           title: "Add Card"
         }
       },
-      AddDeck: {
-        screen: AddDeck,
-        navigationOptions: {
-          title: "Add Deck"
-        }
-      },
+      
       Quiz: {
         screen: Quiz,
         navigationOptions: {

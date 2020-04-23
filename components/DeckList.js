@@ -23,6 +23,7 @@ export default class DeckList extends Component {
 	}
 
 	render() {
+		console.log(this.props)
 		const { decks, selected, navigation, refresh_decks } = this.props;
 
 		if(navigation.state.params && navigation.state.params.refresh) {

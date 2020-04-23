@@ -64,9 +64,21 @@ export default class Quiz extends Component {
 	}
 
   render() {
-  	if (this.state.answered < this.state.total_cards) {
+  	if (this.state.total_cards === 0) {
+  		return (
+  			<View>
+					<Text>
+						There are no cards in this deck
+					</Text>
+				</View>
+			)
+  	}
+  	else if (this.state.answered < this.state.total_cards) {
 			return (
 				<View>
+					<Text>
+						{this.state.total_cards - this.state.answered} cards remaining
+					</Text>
 
 					<Text>
 						{this.state.current_card.question}

@@ -20,7 +20,8 @@ export default class AddCard extends Component {
 		let deck = this.props.navigation.state.params.deck;
 		let { question, answer } = this.state;
 		await addCard(deck, { question, answer });
-		this.props.navigation.navigate('DeckList', { refresh: true });
+		// this.props.navigation.navigate('DeckList', { refresh: true });
+		this.props.navigation.navigate('DeckPage', { deck, refresh_decks:this.props.refresh_decks})
 	}
 
   render() {

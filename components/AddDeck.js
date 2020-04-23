@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import DeckInfo from './DeckInfo'
-import { addDeck } from '../utils/api'
+import { addDeck, getAllDecks } from '../utils/api'
+import { StackActions, NavigationActions } from 'react-navigation';
 
 export default class AddDeck extends Component {
 	state = {
@@ -12,13 +13,38 @@ export default class AddDeck extends Component {
 		this.setState({ value: text });
 	}
 
-	submit = (name) => {
-		let deck = {
+	submit = async (name) => {
+		await addDeck({
 			name,
 			cards: [],
-		}
-		addDeck(deck);
-		this.props.navigation.navigate('DeckList', { refresh: true });
+		});
+
+		let updated_decks = await getAllDecks();
+		let data = await getAllDecks();
+    data = JSON.parse(data);
+    let decks = data.decks;
+    decks = Object.values(decks);
+    let deck = decks.filter((d) => {
+    	return d.name === name
+    })[0]
+
+    // this.props.set_needs_refresh();
+
+		/////// source //////
+		// https://stackoverflow.com/questions/46457420/remove-last-route-from-react-navigation-stack
+		const resetAction = StackActions.reset({
+	    index: 0,
+	    actions: [NavigationActions.navigate({
+	    	routeName: 'Home',
+	    	// params: { refresh: true },
+	    })],
+		});
+		this.props.navigation.dispatch(resetAction);
+		///////////////////
+
+		
+		// this.props.navigation.navigate('DeckList', { refresh: true, new_deck: deck })
+		this.props.navigation.navigate('DeckPage', { deck, refresh_decks:this.props.refresh_decks})
 	}
 
 	render() {

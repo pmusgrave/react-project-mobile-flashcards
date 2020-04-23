@@ -17,6 +17,7 @@ export default class DeckPage extends Component {
 		this.props.navigation.state.params.refresh_decks();
 		this.props.navigation.navigate('DeckList');
 	}
+	
 	render() {
 		const { deck } = this.props.navigation.state.params;
 
