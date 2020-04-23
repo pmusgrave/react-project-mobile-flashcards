@@ -25,6 +25,10 @@ export default class DeckList extends Component {
 	render() {
 		const { decks, selected, navigation, refresh_decks } = this.props;
 
+		if(navigation.state.params && navigation.state.params.refresh) {
+			refresh_decks();
+		}
+
 		if (selected === null) {
 			return (
 				<View>

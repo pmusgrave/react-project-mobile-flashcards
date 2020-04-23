@@ -18,7 +18,7 @@ export default class AddDeck extends Component {
 			cards: [],
 		}
 		addDeck(deck);
-		this.props.showDeckList();
+		this.props.navigation.navigate('DeckList', { refresh: true });
 	}
 
 	render() {

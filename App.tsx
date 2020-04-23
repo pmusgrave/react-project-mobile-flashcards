@@ -74,7 +74,7 @@ export default class App extends Component {
           tabBarLabel: 'Decks',
         },
       },
-      AddEntry: {
+      AddDeck: {
         screen: AddDeck,
         navigationOptions: {
           tabBarLabel: 'Add Deck',
@@ -85,9 +85,21 @@ export default class App extends Component {
     const MainNavigator = createStackNavigator({
       Home: {
         screen: Tabs,
+        navigationOptions: {
+          title: "Mobile Flash Cards"
+        }
       },
       DeckPage: {
         screen: DeckPage,
+        navigationOptions: {
+          title: "Deck"
+        }
+      },
+      AddDeck: {
+        screen: AddDeck,
+        navigationOptions: {
+          title: "Add Deck"
+        }
       },
     })
 
