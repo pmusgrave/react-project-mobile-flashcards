@@ -4,12 +4,12 @@ import { removeDeck } from '../utils/api'
 import DeckInfo from './DeckInfo'
 
 export default class DeckPage extends Component {
-	addCard = () => {
-
+	addCard = (deck) => {
+		this.props.navigation.navigate('AddCard', { deck, });
 	}
 
-	startQuiz = () => {
-
+	startQuiz = (deck) => {
+		this.props.navigation.navigate('Quiz', { deck, });
 	}
 
 	delete = async (deck) => {

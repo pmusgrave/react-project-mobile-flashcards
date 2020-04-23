@@ -7,13 +7,14 @@ import { getAllDecks, addDeck } from './utils/api'
 import DeckList from './components/DeckList'
 import DeckPage from './components/DeckPage'
 import DeckInfo from './components/DeckInfo'
+import AddCard from './components/AddCard'
 import AddDeck from './components/AddDeck'
+import Quiz from './components/Quiz'
 
 export default class App extends Component {
   state = {
     showDeckList: true,
     decks: [],
-    selected: null,
   };
 
   componentDidMount() {
@@ -33,41 +34,12 @@ export default class App extends Component {
     }
   }
 
-  select = async (deck) => {
-    this.setState({ selected: deck })
-  }
-
-  resetView = () => {
-    this.setState({ 
-      selected: null,
-    });
-  }
-
-  showDeckList = () => {
-    this.setState({ 
-      selected: null,
-      showDeckList: true,
-      showAddDeck: false,
-    }); 
-  }
-
-  showAddDeck = () => {
-    this.setState({ 
-      selected: null,
-      showDeckList: false,
-      showAddDeck: true,
-    });
-  }
-
   render(){
     const Tabs = createBottomTabNavigator({
       DeckList: {
         screen: (props) => 
           <DeckList {...props} 
             decks={this.state.decks}
-            selected={this.state.selected}
-            select={this.select.bind(this)}
-            resetView={this.resetView.bind(this)}
             refresh_decks={this.refresh_decks.bind(this)}
           />,
         navigationOptions: {
@@ -95,12 +67,24 @@ export default class App extends Component {
           title: "Deck"
         }
       },
+      AddCard: {
+        screen: AddCard,
+        navigationOptions: {
+          title: "Add Card"
+        }
+      },
       AddDeck: {
         screen: AddDeck,
         navigationOptions: {
           title: "Add Deck"
         }
       },
+      Quiz: {
+        screen: Quiz,
+        navigationOptions: {
+          title: "Quiz",
+        }
+      }
     })
 
     const AppContainer = createAppContainer(MainNavigator);

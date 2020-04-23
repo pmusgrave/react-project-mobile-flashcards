@@ -29,25 +29,15 @@ export default class DeckList extends Component {
 			refresh_decks();
 		}
 
-		if (selected === null) {
-			return (
-				<View>
-					<FlatList 
-						data={decks}
-						renderItem={(e) => this.renderItem(navigation, e.item, refresh_decks)}
-						keyExtractor={(item, index) => index.toString()}
-					/>
-				</View>
-			);
-		}
-		// else {
-		// 	return (
-		// 		<DeckPage
-		// 			deck={selected}
-		// 			resetView={this.props.resetView}
-		// 			refresh_decks={this.props.refresh_decks}/>
-		// 	);
-		// }
+		return (
+			<View>
+				<FlatList 
+					data={decks}
+					renderItem={(e) => this.renderItem(navigation, e.item, refresh_decks)}
+					keyExtractor={(item, index) => index.toString()}
+				/>
+			</View>
+		);
 	}
 }
 
@@ -60,6 +50,6 @@ const styles = StyleSheet.create({
     margin: 5
   },
   button: {
-
+  	flex: 1,
   },
 });
