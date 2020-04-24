@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-nativ
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
 import { createAppContainer, } from 'react-navigation';
+import { Feather, Ionicons } from '@expo/vector-icons'
 import { getAllDecks, addDeck } from './utils/api'
 import DeckList from './components/DeckList'
 import DeckPage from './components/DeckPage'
@@ -48,12 +49,14 @@ export default class App extends Component {
           />,
         navigationOptions: {
           tabBarLabel: 'Decks',
+          tabBarIcon: () => <Feather name='layers' size={30} />
         },
       },
       AddDeck: {
         screen: (props) => (<AddDeck refresh_decks={this.refresh_decks.bind(this)} {...props}/>),
         navigationOptions: {
           tabBarLabel: 'Add Deck',
+          tabBarIcon: () => <Ionicons name='md-add-circle-outline' size={30} />
         },
       },
     })

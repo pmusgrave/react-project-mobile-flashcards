@@ -36,9 +36,9 @@ export default class DeckPage extends Component {
 		        <Text style={styles.buttonText}>START QUIZ</Text>
 		      </TouchableOpacity>
 					<TouchableOpacity
-		        style={styles.button}
+		        style={styles.deleteButton}
 		        onPress={ () => this.delete(deck) }>
-		        <Text style={styles.buttonText}>DELETE DECK</Text>
+		        <Text style={styles.deleteButtonText}>DELETE DECK</Text>
 		      </TouchableOpacity>
 				</View>
 			</View>
@@ -63,6 +63,19 @@ const styles = StyleSheet.create({
   },
   buttonText: {
   	fontSize: 22,
-  	color: "#FFFFFF",
+  	color: '#FFFFFF',
   },
+  deleteButton: {
+  	width: 250,
+  	height: 65,
+  	borderRadius: 5,
+  	margin: 5,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  	backgroundColor: '#EF314B'
+  },
+  deleteButtonText: {
+  	fontSize: 22,
+  	color: '#421D19',
+  }
 });
