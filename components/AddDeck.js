@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, BackHandler } from 'react-native'
 import DeckInfo from './DeckInfo'
 import { addDeck, getAllDecks } from '../utils/api'
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -9,11 +9,28 @@ export default class AddDeck extends Component {
 		value: "",
 	}
 
+	componentDidMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.back_handler);
+  };
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.back_handler);
+  };
+
+  back_handler = () => {
+    this.props.refresh_decks();
+    return false;
+  }
+
 	onChangeText = (text) => {
 		this.setState({ value: text });
 	}
 
 	submit = async (name) => {
+		if (name === "" || name === undefined) {
+			alert("Deck name cannot be empty")
+			return;
+		}
 		await addDeck({
 			name,
 			cards: [],
@@ -50,7 +67,7 @@ export default class AddDeck extends Component {
 	render() {
 		let { value } = this.state;
 		return (
-			<View style={styles.header}>
+			<View style={styles.container}>
 				<Text style={styles.headerText}>What is the title of your new deck?</Text>
 				<TextInput
 		      style={styles.input}
@@ -60,7 +77,7 @@ export default class AddDeck extends Component {
 		    <TouchableOpacity
 	        style={styles.button}
 	        onPress={() => { this.submit(this.state.value) }}>
-	        <Text>SUBMIT</Text>
+	        <Text style={styles.buttonText}>SUBMIT</Text>
 	      </TouchableOpacity>
 			</View>
 		);
@@ -68,17 +85,30 @@ export default class AddDeck extends Component {
 }
 
 const styles = {
-	header: {
+	container:{
 		flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    margin: 5,
+		alignItems: 'stretch',
+		justifyContent: 'space-around',
+		margin: 20,
 	},
 	headerText: {
-		fontSize: 22
+		fontSize: 24,
 	},
 	input: {
 		borderColor: 'gray',
 		borderWidth: 1,
+		height: 45,
 	},
+	button: {
+  	backgroundColor: '#808080',
+  	height: 65,
+  	borderRadius: 5,
+  	margin: 50,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  },
+  buttonText: {
+  	fontSize: 22,
+  	color: '#FFFFFF',
+  },
 }

@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, BackHandler } from 'react-native'
 import { removeDeck } from '../utils/api'
 import DeckInfo from './DeckInfo'
 
 export default class DeckPage extends Component {
+	componentDidMount = () => {
+    BackHandler.addEventListener('hardwareBackPress', this.back_handler);
+  };
+
+  componentWillUnmount = () => {
+    BackHandler.removeEventListener('hardwareBackPress', this.back_handler);
+  };
+
+  back_handler = () => {
+  	alert('back')
+    this.props.refresh_decks();
+    return false;
+  }
+
 	addCard = (deck) => {
 		this.props.navigation.navigate('AddCard', { deck, });
 	}

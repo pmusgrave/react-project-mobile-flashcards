@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar,
+  BackHandler
+} from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
 import { createAppContainer, } from 'react-navigation';
@@ -17,10 +23,6 @@ export default class App extends Component {
     showDeckList: true,
     decks: [],
   };
-
-  componentDidMount() {
-    this.refresh_decks();
-  }
 
   refresh_decks = async () => {
     console.log('refreshing...')
@@ -69,10 +71,12 @@ export default class App extends Component {
         }
       },
       DeckPage: {
-        screen: DeckPage,
+        screen: (props) => (<DeckPage {...props} refresh_decks={this.refresh_decks.bind(this)}/>),
         navigationOptions: ({navigation}) => ({
           title: 'Deck',
-          headerLeft: () => <HeaderBackButton onPress={() => this.refresh_decks()} />
+          headerLeft: () => <HeaderBackButton
+            onPress={() => this.refresh_decks()}
+          />
         })
       },
       AddCard: {
