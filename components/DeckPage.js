@@ -13,7 +13,6 @@ export default class DeckPage extends Component {
   };
 
   back_handler = () => {
-  	alert('back')
     this.props.refresh_decks();
     return false;
   }

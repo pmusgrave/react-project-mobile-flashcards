@@ -17,6 +17,11 @@ export default class AddCard extends Component {
 	}
 
 	submit = async () => {
+		if (this.state.question === "" || this.state.answer === "") {
+			alert("Values cannot be empty");
+			return;
+		}
+
 		let deck = this.props.navigation.state.params.deck;
 		let { question, answer } = this.state;
 		await addCard(deck, { question, answer });
@@ -28,22 +33,54 @@ export default class AddCard extends Component {
   	let { question, answer } = this.state;
 
 		return (
-			<View>
-				<Text>Question</Text>
+			<View style={styles.container}>
+				<Text style={styles.headerText}>Question</Text>
 				<TextInput
+					style={styles.input}
 		      onChangeText={text => this.changeQuestionText(text)}
 		      value={question}
 		    />
-		    <Text>Answer</Text>
+		    <Text style={styles.headerText}>Answer</Text>
 				<TextInput
+					style={styles.input}
 		      onChangeText={text => this.changeAnswerText(text)}
 		      value={answer}
 		    />
 		    <TouchableOpacity
+		    	style={styles.button}
 	        onPress={() => { this.submit() }}>
-	        <Text>SUBMIT</Text>
+	        <Text style={styles.container}>SUBMIT</Text>
 	      </TouchableOpacity>
 			</View>
 		);
 	}
+}
+
+const styles = {
+	container:{
+		flex: 1,
+		alignItems: 'stretch',
+		justifyContent: 'space-around',
+		margin: 20,
+	},
+	headerText: {
+		fontSize: 24,
+	},
+	input: {
+		borderColor: 'gray',
+		borderWidth: 1,
+		height: 45,
+	},
+	button: {
+  	backgroundColor: '#808080',
+  	height: 65,
+  	borderRadius: 5,
+  	margin: 40,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  },
+  buttonText: {
+  	fontSize: 22,
+  	color: '#FFFFFF',
+  },
 }
