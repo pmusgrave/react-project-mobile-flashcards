@@ -22,43 +22,47 @@ export default class DeckPage extends Component {
 		const { deck } = this.props.navigation.state.params;
 
 		return (
-			<View>
+			<View style={styles.container}>
 				<DeckInfo deck={deck}/>
-				<TouchableOpacity
-	        style={styles.button}
-	        onPress={ () => this.addCard(deck) }>
-	        <Text>ADD CARD</Text>
-	      </TouchableOpacity>
-	      <TouchableOpacity
-	        style={styles.button}
-	        onPress={ () => this.startQuiz(deck) }>
-	        <Text>START QUIZ</Text>
-	      </TouchableOpacity>
-				<TouchableOpacity
-	        style={styles.button}
-	        onPress={ () => this.delete(deck) }>
-	        <Text>DELETE DECK</Text>
-	      </TouchableOpacity>
+				<View style={styles.containter}>
+					<TouchableOpacity
+		        style={styles.button}
+		        onPress={ () => this.addCard(deck) }>
+		        <Text style={styles.buttonText}>ADD CARD</Text>
+		      </TouchableOpacity>
+		      <TouchableOpacity
+		        style={styles.button}
+		        onPress={ () => this.startQuiz(deck) }>
+		        <Text style={styles.buttonText}>START QUIZ</Text>
+		      </TouchableOpacity>
+					<TouchableOpacity
+		        style={styles.button}
+		        onPress={ () => this.delete(deck) }>
+		        <Text style={styles.buttonText}>DELETE DECK</Text>
+		      </TouchableOpacity>
+				</View>
 			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
-  deck: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 22,
-  },
-  cards: {
+	container: {
 		flex: 1,
-    color: '#808080',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 18,
-  },
+		alignItems: 'center',
+		justifyContent: 'space-around',
+	},
   button: {
-
+  	backgroundColor: '#808080',
+  	width: 250,
+  	height: 65,
+  	borderRadius: 5,
+  	margin: 5,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  },
+  buttonText: {
+  	fontSize: 22,
+  	color: "#FFFFFF",
   },
 });

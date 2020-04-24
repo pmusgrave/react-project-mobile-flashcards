@@ -20,16 +20,10 @@ export default class DeckInfo extends Component {
 
 const styles = StyleSheet.create({
   deck: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     fontSize: 22,
   },
   cards: {
-		flex: 1,
     color: '#808080',
-    alignItems: 'center',
-    justifyContent: 'center',
     fontSize: 18,
   }
 });

@@ -69,7 +69,7 @@ export default class App extends Component {
         screen: DeckPage,
         navigationOptions: ({navigation}) => ({
           title: 'Deck',
-          headerLeft: <HeaderBackButton onPress={() => this.refresh_decks()} />
+          headerLeft: () => <HeaderBackButton onPress={() => this.refresh_decks()} />
         })
       },
       AddCard: {
@@ -94,22 +94,3 @@ export default class App extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex:1,
-  },
-  navButtonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    alignItems: 'bottom',
-    justifyContent: 'stretch',
-  },
-  navButtons: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});

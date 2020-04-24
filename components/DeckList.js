@@ -23,7 +23,6 @@ export default class DeckList extends Component {
 	}
 
 	render() {
-		console.log(this.props)
 		const { decks, selected, navigation, refresh_decks } = this.props;
 
 		if(navigation.state.params && navigation.state.params.refresh) {
@@ -46,11 +45,13 @@ const styles = StyleSheet.create({
   deck: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
-    margin: 5
+    margin: 1
   },
   button: {
   	flex: 1,
+  	margin: 2,
+  	alignItems: 'center',
   },
 });
