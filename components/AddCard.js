@@ -49,7 +49,7 @@ export default class AddCard extends Component {
 		    <TouchableOpacity
 		    	style={styles.button}
 	        onPress={() => { this.submit() }}>
-	        <Text style={styles.container}>SUBMIT</Text>
+	        <Text style={styles.buttonText}>SUBMIT</Text>
 	      </TouchableOpacity>
 			</View>
 		);

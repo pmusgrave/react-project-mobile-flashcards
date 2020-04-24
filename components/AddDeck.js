@@ -77,7 +77,7 @@ export default class AddDeck extends Component {
 		    <TouchableOpacity
 	        style={styles.button}
 	        onPress={() => { this.submit(this.state.value) }}>
-	        <Text style={styles.buttonText}>SUBMIT</Text>
+	        <Text style={styles.buttonText}>CREATE DECK</Text>
 	      </TouchableOpacity>
 			</View>
 		);

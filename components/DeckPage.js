@@ -8,10 +8,6 @@ export default class DeckPage extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.back_handler);
   };
 
-  componentWillUnmount = () => {
-    BackHandler.removeEventListener('hardwareBackPress', this.back_handler);
-  };
-
   back_handler = () => {
     this.props.refresh_decks();
     return false;

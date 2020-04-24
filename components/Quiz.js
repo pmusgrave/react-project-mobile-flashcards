@@ -66,8 +66,8 @@ export default class Quiz extends Component {
   render() {
   	if (this.state.total_cards === 0) {
   		return (
-  			<View>
-					<Text>
+  			<View style={styles.container}>
+					<Text style={styles.headerText}>
 						There are no cards in this deck
 					</Text>
 				</View>
@@ -75,33 +75,36 @@ export default class Quiz extends Component {
   	}
   	else if (this.state.answered < this.state.total_cards) {
 			return (
-				<View>
-					<Text>
+				<View style={styles.container}>
+					<Text style={styles.headerText}>
 						{this.state.total_cards - this.state.answered} cards remaining
 					</Text>
 
-					<Text>
-						{this.state.current_card.question}
+					<Text style={styles.headerText}>
+						Question: {this.state.current_card.question}
 					</Text>
 
 					{this.state.show_answer 
 					? <View>
-							<Text>
-								{this.state.current_card.answer}
+							<Text style={styles.headerText}>
+								Answer: {this.state.current_card.answer}
 							</Text>
 							<TouchableOpacity
+								style={styles.button}
 		        		onPress={ this.correct }>
-		        		<Text>Correct</Text>
+		        		<Text style={styles.buttonText}>Correct</Text>
 		      		</TouchableOpacity>
 		      		<TouchableOpacity
+		      			style={styles.button}
 		        		onPress={ this.incorrect }>
-		        		<Text>Incorrect</Text>
+		        		<Text style={styles.buttonText}>Incorrect</Text>
 		      		</TouchableOpacity>
 						</View>
 					: <View>
 							<TouchableOpacity
+								style={styles.button}
 		        		onPress={ this.show_answer }>
-		        		<Text>SHOW ANSWER</Text>
+		        		<Text style={styles.buttonText}>SHOW ANSWER</Text>
 		      		</TouchableOpacity>
 	      		</View>
 					}
@@ -111,20 +114,46 @@ export default class Quiz extends Component {
   	}
 		else {
 			return (
-				<View>
-					<Text>
+				<View style={styles.container}>
+					<Text style={styles.headerText}>
 						Your answered {this.state.answered_correctly} out of {this.state.total_cards} cards correctly.
 					</Text>
 					<TouchableOpacity
+						style={styles.button}
 	      		onPress={ this.reset_quiz }>
-	      		<Text>Restart Quiz</Text>
+	      		<Text style={styles.buttonText}>Restart Quiz</Text>
 	    		</TouchableOpacity>
 	    		<TouchableOpacity
+	    			style={styles.button}
 	      		onPress={ () => this.props.navigation.navigate('DeckPage', { deck: this.state.deck }) }>
-	      		<Text>Back to Deck</Text>
+	      		<Text style={styles.buttonText}>Back to Deck</Text>
 	    		</TouchableOpacity>
 				</View>
 			)
 		}
 	}
+}
+
+const styles = {
+	container:{
+		flex: 1,
+		alignItems: 'stretch',
+		justifyContent: 'space-around',
+		margin: 20,
+	},
+	headerText: {
+		fontSize: 24,
+	},
+	button: {
+  	backgroundColor: '#808080',
+  	height: 65,
+  	borderRadius: 5,
+  	margin: 40,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  },
+  buttonText: {
+  	fontSize: 22,
+  	color: '#FFFFFF',
+  },
 }
